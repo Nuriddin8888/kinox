@@ -5,6 +5,8 @@ from aiogram import Bot, Dispatcher, types, F
 from aiogram.filters import CommandStart, Command
 from aiogram.fsm.context import FSMContext
 
+from aiogram.client.session.aiohttp import AiohttpSession
+
 from database import init_db, add_user, get_user, add_movie, get_movie, delete_movie, get_all_users
 from buttons.inline import check_subscription, subscription_button, admin_panel_button, movie_pagination, users_pagination, confirm_reklama_btn
 from state import FilmState, DeleteMovie, ReklamaState
@@ -14,8 +16,10 @@ from config import TOKEN, ADMIN_ID
 
 logging.basicConfig(level=logging.INFO)
 
+PROXY_URL = "http://proxy.server:3128"
+session = AiohttpSession(proxy=PROXY_URL)
 
-bot = Bot(token=TOKEN)
+bot = Bot(token=TOKEN, session=session)
 
 dp = Dispatcher()
 
